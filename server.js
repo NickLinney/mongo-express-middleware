@@ -1,6 +1,7 @@
 import { message } from './src/page.js'
 import express from 'express'
 import cors from 'cors'
+import { openConnection } from './src/mongo.js'
 
 const server = express()
 
@@ -9,8 +10,12 @@ server.get('/', (req, res) => {
   res.send('Home Page')
 })
 
-server.get('/users', (req, res) => {
-  res.send('Users Page')
+server.get('/mongo', async (req, res) => {
+  try {
+    res.send(openConnection())
+  } catch (err) {
+    res.send("A problem occurred.")
+  }
 })
 
 server.get('/message', (req, res) => {
